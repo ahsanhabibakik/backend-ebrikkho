@@ -96,7 +96,7 @@ exports.createOrder = async (req, res) => {
 // @access  Private/Admin
 exports.getOrders = async (req, res) => {
   try {
-    const orders = await Order.find().populate("user", "name email");
+    const orders = await Order.find().populate("user", "name email").lean();
 
     res.status(200).json({
       success: true,
@@ -116,7 +116,7 @@ exports.getOrders = async (req, res) => {
 // @access  Private
 exports.getUserOrders = async (req, res) => {
   try {
-    const orders = await Order.find({ user: req.user.id });
+    const orders = await Order.find({ user: req.user.id }).lean();
 
     res.status(200).json({
       success: true,
@@ -136,10 +136,9 @@ exports.getUserOrders = async (req, res) => {
 // @access  Private
 exports.getOrderById = async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id).populate(
-      "user",
-      "name email"
-    );
+    const order = await Order.findById(req.params.id)
+      .populate("user", "name email")
+      .lean();
 
     if (!order) {
       return res.status(404).json({

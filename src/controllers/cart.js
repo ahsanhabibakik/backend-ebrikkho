@@ -6,9 +6,9 @@ const Product = require("../models/Product");
 // @access  Private
 exports.getCart = async (req, res) => {
   try {
-    let cart = await Cart.findOne({ user: req.user.id }).populate(
-      "items.product"
-    );
+    let cart = await Cart.findOne({ user: req.user.id })
+      .populate("items.product")
+      .lean();
 
     if (!cart) {
       // Create empty cart if it doesn't exist
@@ -83,7 +83,9 @@ exports.addToCart = async (req, res) => {
     }
 
     // Populate product details
-    cart = await Cart.findOne({ user: req.user.id }).populate("items.product");
+    cart = await Cart.findOne({ user: req.user.id })
+      .populate("items.product")
+      .lean();
 
     res.status(200).json({
       success: true,
@@ -132,9 +134,9 @@ exports.updateCartItem = async (req, res) => {
     await cart.save();
 
     // Populate product details
-    const updatedCart = await Cart.findOne({ user: req.user.id }).populate(
-      "items.product"
-    );
+    const updatedCart = await Cart.findOne({ user: req.user.id })
+      .populate("items.product")
+      .lean();
 
     res.status(200).json({
       success: true,
@@ -170,9 +172,9 @@ exports.removeFromCart = async (req, res) => {
     await cart.save();
 
     // Populate product details
-    const updatedCart = await Cart.findOne({ user: req.user.id }).populate(
-      "items.product"
-    );
+    const updatedCart = await Cart.findOne({ user: req.user.id })
+      .populate("items.product")
+      .lean();
 
     res.status(200).json({
       success: true,

@@ -48,7 +48,7 @@ exports.getProducts = async (req, res) => {
     query = query.skip(startIndex).limit(limit);
 
     // Executing query
-    const products = await query;
+    const products = await query.lean();
 
     // Pagination result
     const pagination = {};
@@ -86,7 +86,7 @@ exports.getProducts = async (req, res) => {
 // @access  Public
 exports.getProduct = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).lean();
 
     if (!product) {
       return res.status(404).json({
