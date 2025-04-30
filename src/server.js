@@ -23,6 +23,7 @@ app.use(compression());
 // Import routes
 const cartRoutes = require("./routes/cart");
 const orderRoutes = require("./routes/orders");
+const authRoutes = require("./routes/auth"); // New auth routes
 
 // Health check endpoint
 app.get("/health", (req, res) => {
@@ -37,6 +38,7 @@ app.get("/", (req, res) => {
 // Mount routes
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/auth", authRoutes); // Mount auth routes
 
 // Global error handler
 app.use(errorHandler);
